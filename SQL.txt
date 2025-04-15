@@ -1,0 +1,63 @@
+CREATE DATABASE crental_system;
+
+USE crental_system;
+
+-- Create the users table first
+CREATE TABLE users (
+    user_id INT(11) PRIMARY KEY AUTO_INCREMENT,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    phone VARCHAR(15) NOT NULL,
+    address TEXT DEFAULT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    role ENUM('user', 'admin') DEFAULT 'user',
+    wallet_balance DECIMAL(10, 2) DEFAULT 0.00,
+    profile_image VARCHAR(255) DEFAULT NULL
+);
+
+-- Create the cars table
+CREATE TABLE cars (
+    car_id INT(11) PRIMARY KEY AUTO_INCREMENT,
+    model VARCHAR(50) NOT NULL,
+    year INT(11) NOT NULL,
+    plate_id VARCHAR(20) UNIQUE NOT NULL,
+    status ENUM('active', 'out of service', 'rented') DEFAULT 'active',
+    price_per_day DECIMAL(10, 2) NOT NULL,
+    office_location VARCHAR(100) NOT NULL,
+    image VARCHAR(255) DEFAULT NULL
+);
+
+-- Create the reservations table
+CREATE TABLE reservations (
+    reservation_id INT(11) PRIMARY KEY AUTO_INCREMENT,
+    user_id INT(11),
+    car_id INT(11),
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    total_cost DECIMAL(10, 2) NOT NULL,
+    payment_status ENUM('pending', 'paid') DEFAULT 'pending',
+    status ENUM('pending', 'accepted', 'declined') DEFAULT 'pending',
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (car_id) REFERENCES cars(car_id) ON DELETE CASCADE
+);
+
+-- Create the payments table
+CREATE TABLE payments (
+    payment_id INT(11) PRIMARY KEY AUTO_INCREMENT,
+    reservation_id INT(11),
+    payment_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    amount DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (reservation_id) REFERENCES reservations(reservation_id) ON DELETE CASCADE
+);
+
+-- Create the news table
+CREATE TABLE news (
+    news_id INT(11) PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    image_path VARCHAR(255) DEFAULT NULL,
+    expiration_time DATETIME DEFAULT NULL
+);
