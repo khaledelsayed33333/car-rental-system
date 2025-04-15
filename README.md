@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ##### 🚗 Car Rental System
 
 
@@ -98,3 +99,7 @@ car-rental-system/
 
 📄 License
 This project is created for educational use. Feel free to modify or expand it.
+=======
+# car-rental-system
+Car Rental System is a web application that allows users to browse available cars, make reservations, and manage their profiles. Admins can manage cars, users, and reservations. The system supports wallet funding and payments for seamless car rental management.
+>>>>>>> 1ca65a4483516f5425f83c9a404c3b405748a290
